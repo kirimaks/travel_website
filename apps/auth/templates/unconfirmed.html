@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    <h4>This account is not confirmed</h4>
+    <a href="{{ url_for('auth.resend_confirmation') }}">Send confirmation link again</a>
+{% endblock %}
