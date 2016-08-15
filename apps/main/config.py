@@ -1,4 +1,5 @@
 import os
+from os.path import abspath
 import logging
 from logging import StreamHandler
 import uuid
@@ -7,6 +8,8 @@ import uuid
 log_handler = StreamHandler()
 formatter = logging.Formatter('%(levelname)s:\t %(message)s')
 log_handler.setFormatter(formatter)
+
+BASE_DIR = str.join("/", abspath(__file__).split("/")[:-3])
 
 
 class Config:
@@ -29,6 +32,8 @@ class Config:
 
 
 class DebugConfig(Config):
+    DEBUG = True
+
     X_LOG_LEVEL = logging.DEBUG
 
     SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/test.db"

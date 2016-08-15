@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+
+{% block body %}
+    <div class="container">
+        <div class="col-md-3">
+            <div class="list-group">
+                {% for view in admin_views %}
+                    <a href="{{ view.url }}" class="list-group-item">
+                        {{ view.name }}<span class="badge">{{ view.get_count_query().first()[0] }}</span>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h4>Hello {{ user }}</h4>
+        </div>
+    </div>
+{% endblock %}

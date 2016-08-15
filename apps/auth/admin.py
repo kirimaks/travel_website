@@ -1,16 +1,35 @@
-from flask import request, url_for, redirect
-from flask_login import current_user
-from apps.auth.models import User, UserGroup
-from apps.main import db, admin
 from flask_admin.contrib.sqla import ModelView
+from apps.auth.models import User, UserGroup
+from apps.main.admin import ProtectedAdminView
+from apps.main import db, admin
 
 
-class ModelViewSec(ModelView):
-    def is_accessible(self):
-        return current_user.is_authenticated
+class UserView(ProtectedAdminView, ModelView):
+    column_display_pk = True
+    form_widget_args = {
+        'password_hash': {
+            'disabled': True
+        },
+        'confirmed': {
+            'style': 'width: 20px'
+        }
+    }
 
-    def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for('auth.login', next=request.url))
+    form_ajax_refs = {
+        'groups': {
+            'fields': (UserGroup.name,),
+        }
+    }
 
-admin.add_view(ModelViewSec(User, db.session))
-admin.add_view(ModelViewSec(UserGroup, db.session))
+    @property
+    def display_home(self):
+        return True
+
+
+class GroupView(ProtectedAdminView, ModelView):
+    @property
+    def display_home(self):
+        return True
+
+admin.add_view(UserView(User, db.session))
+admin.add_view(GroupView(UserGroup, db.session))

@@ -62,3 +62,6 @@ class UserGroup(db.Model):
     name = db.Column(db.String, unique=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    def __repr__(self):
+        return "<{}>".format(self.name)
