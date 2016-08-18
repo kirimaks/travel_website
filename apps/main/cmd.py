@@ -31,6 +31,8 @@ class CmdTest(Command):
             start_dir = "tests/tours/"
         elif test_type == "auth":
             start_dir = "tests/auth/"
+        else:
+            raise AssertionError("Unknown test {}".format(test_type))
 
         tests = unittest.TestLoader().discover(start_dir=start_dir,
                                                pattern=self.test_pattern)
@@ -48,3 +50,15 @@ def make_shell_context():
         "app": current_app
     }
     return context
+
+
+class CmdAdmin(Command):
+    def run(self):
+        print("Create admin")
+
+        from apps.auth.models import User
+        admin = User(username="admin", password="1234",
+                     email="kirimaks@yahoo.com",
+                     confirmed=True)
+        db.session.add(admin)
+        db.session.commit()

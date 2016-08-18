@@ -3,6 +3,7 @@ from apps.main import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from sqlalchemy.orm import relationship, backref
 
 
 # Required by flask-login.
@@ -11,15 +12,23 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+user_to_group = db.Table('user_to_group', db.Model.metadata,
+                         db.Column("user_id", db.Integer,
+                                   db.ForeignKey("users.id")),
+                         db.Column("group_id", db.Integer,
+                                   db.ForeignKey("user_groups.id")))
+
+
 class User(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
     email = db.Column(db.String, unique=True)
     password_hash = db.Column(db.String(128), unique=True)
-
-    group = db.relationship("UserGroup", backref="users")
     confirmed = db.Column(db.Boolean, default=False)
+
+    groups = relationship("UserGroup", secondary=user_to_group,
+                          backref=backref('users', order_by=id))
 
     def __repr__(self):
         return "<{}>".format(self.username)
@@ -60,8 +69,6 @@ class UserGroup(db.Model):
     __tablename__ = "user_groups"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
-
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     def __repr__(self):
         return "<{}>".format(self.name)

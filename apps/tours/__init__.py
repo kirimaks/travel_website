@@ -7,3 +7,5 @@ from flask import Blueprint
 tours_app = Blueprint('tours', __name__, template_folder="templates")
 
 import_module(".views", package="apps.tours")
+import_module(".models", package="apps.tours")
+import_module(".admin", package="apps.tours")
