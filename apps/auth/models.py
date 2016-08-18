@@ -12,11 +12,11 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-user_to_group = db.Table('user_to_group', db.Model.metadata,
-                         db.Column("user_id", db.Integer,
-                                   db.ForeignKey("users.id")),
-                         db.Column("group_id", db.Integer,
-                                   db.ForeignKey("user_groups.id")))
+user2group = db.Table('user2group', db.Model.metadata,
+                      db.Column("user_id", db.Integer,
+                                db.ForeignKey("users.id")),
+                      db.Column("group_id", db.Integer,
+                                db.ForeignKey("user_groups.id")))
 
 
 class User(UserMixin, db.Model):
@@ -27,7 +27,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128), unique=True)
     confirmed = db.Column(db.Boolean, default=False)
 
-    groups = relationship("UserGroup", secondary=user_to_group,
+    groups = relationship("UserGroup", secondary=user2group,
                           backref=backref('users', order_by=id))
 
     def __repr__(self):

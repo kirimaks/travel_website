@@ -3,6 +3,7 @@ from apps.tours.models import Tour
 from apps.main.admin import ProtectedAdminView
 from apps.main import db, admin
 from apps.places.models import Place
+from apps.comments.models import Comment
 
 
 class ModelViewSec(ProtectedAdminView, ModelView):
@@ -14,6 +15,10 @@ class ModelViewSec(ProtectedAdminView, ModelView):
         'places': {
             'fields': [Place.title],
             'page_size': 10
+        },
+        'comments': {
+            'fields': [Comment.author_name, Comment.author_email],
+            'page_size': 5
         }
     }
 

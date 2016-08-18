@@ -1,5 +1,13 @@
 from apps.main import db
 from sqlalchemy import CheckConstraint
+from apps.comments.models import Comment
+
+
+comments2places = db.Table("comments2places", db.metadata,
+                           db.Column("comment_id", db.Integer,
+                                     db.ForeignKey("comments.id")),
+                           db.Column("place_id", db.Integer,
+                                     db.ForeignKey("places.id")))
 
 
 class Place(db.Model):
@@ -18,6 +26,8 @@ class Place(db.Model):
     info = db.Column(db.Text)
     address = db.Column(db.String(128))
     location = db.Column(db.String(64))
+
+    comments = db.relationship(Comment, secondary=comments2places)
 
     def __repr__(self):
         return self.title

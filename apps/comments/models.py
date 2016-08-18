@@ -10,3 +10,7 @@ class Comment(db.Model):
     author_email = db.Column(db.String(64), nullable=False)
     text = db.Column(db.Text, nullable=False)
     posted_time = db.Column(db.DateTime, default=datetime.utcnow())
+
+    def __repr__(self):
+        return "{} | {} | {}".format(self.author_name, self.author_email,
+                                 self.posted_time)
