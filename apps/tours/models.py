@@ -1,5 +1,11 @@
 from apps.main import db
 
+places_to_tours = db.Table("places_to_tours", db.Model.metadata,
+                           db.Column("place_id", db.Integer,
+                                     db.ForeignKey("places.id")),
+                           db.Column("tour_id", db.Integer,
+                                     db.ForeignKey("tours.id")))
+
 
 class Tour(db.Model):
     __tablename__ = "tours"
@@ -11,3 +17,6 @@ class Tour(db.Model):
     duration = db.Column(db.String(64))
     min_people_number = db.Column(db.Integer)
     distance = db.Column(db.Integer)
+
+    places = db.relationship("Place", secondary=places_to_tours,
+                             backref="places")

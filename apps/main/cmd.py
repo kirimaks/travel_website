@@ -3,6 +3,7 @@ from flask_script import Command, Option
 from apps.main import db
 from apps.auth.models import User, UserGroup
 from flask import current_app
+import sys
 
 
 class CmdTest(Command):
@@ -11,11 +12,20 @@ class CmdTest(Command):
 [places]\n
 [tours]\n
 [auth]\n
+[comments]\n
     """
 
     def __init__(self):
         self.test_type = "client"
         self.test_pattern = "test_*"
+
+        self.test_path_dict = {
+            "client": "tests/flask_client/",
+            "places": "tests/places",
+            "tours": "tests/tours",
+            "auth": "tests/auth",
+            "comments": "tests/comments"
+        }
 
     def get_options(self):
         return [
@@ -23,23 +33,15 @@ class CmdTest(Command):
         ]
 
     def run(self, test_type):
-        if test_type == "client":
-            start_dir = "tests/flask_client/"
-        elif test_type == "places":
-            start_dir = "tests/places/"
-        elif test_type == "tours":
-            start_dir = "tests/tours/"
-        elif test_type == "auth":
-            start_dir = "tests/auth/"
-        else:
-            raise AssertionError("Unknown test {}".format(test_type))
+        try:
+            start_dir = self.test_path_dict[test_type]
+        except KeyError:
+            print("No tests for [{}]...".format(test_type))
+            sys.exit(1)
 
         tests = unittest.TestLoader().discover(start_dir=start_dir,
                                                pattern=self.test_pattern)
-        if tests:
-            unittest.TextTestRunner(verbosity=2).run(tests)
-        else:
-            print("No tests...")
+        unittest.TextTestRunner(verbosity=2).run(tests)
 
 
 def make_shell_context():

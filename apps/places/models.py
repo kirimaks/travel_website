@@ -18,3 +18,6 @@ class Place(db.Model):
     info = db.Column(db.Text)
     address = db.Column(db.String(128))
     location = db.Column(db.String(64))
+
+    def __repr__(self):
+        return self.title

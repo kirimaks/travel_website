@@ -57,5 +57,6 @@ def create_modules():
     from apps.tours import tours_app
     from apps.auth import auth_app
     from apps.main.rq_handlers import before_app_req
+    import apps.comments
 
     return vars()
