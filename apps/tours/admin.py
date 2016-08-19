@@ -11,6 +11,15 @@ class ModelViewSec(ProtectedAdminView, ModelView):
     def display_home(self):
         return True
 
+    form_columns = ['title', 'slug', 'price', 'duration',
+                    'min_people_number', 'distance']
+
+    form_widget_args = {
+        'slug': {
+            'disabled': True
+        }
+    }
+
     form_ajax_refs = {
         'places': {
             'fields': [Place.title],
