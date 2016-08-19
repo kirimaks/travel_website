@@ -47,10 +47,32 @@ class PlaceView(ProtectedAdminView, ModelView):
     def display_home(self):
         return True
 
+    form_columns = ['title', 'slug', 'snippet', 'description',
+                    'rating', 'price', 'schedule', 'info',
+                    'address', 'location', 'comments', 'images']
+
+    column_editable_list = ['location', 'price', 'rating']
+
+    form_choices = {
+        'rating': [
+            ('0', 'one'),
+            ('1', 'two'),
+            ('2', 'tree'),
+        ]
+    }
+
     form_ajax_refs = {
         'comments': {
             'fields': [Comment.author_name, Comment.author_email],
             'page_size': 10
+        }
+    }
+    form_widget_args = {
+        'slug': {
+            'disabled': True
+        },
+        'description': {
+            'rows': 20
         }
     }
 
