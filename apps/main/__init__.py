@@ -7,6 +7,7 @@ from flask_admin import Admin
 
 from apps.main.admin import MyAdminHomeView, create_admin_menu
 from apps.main.admin import admin_files_managing
+from apps.main.config import validate_config
 
 
 bootstrap = Bootstrap()
@@ -21,6 +22,7 @@ admin = Admin(template_mode='bootstrap3', index_view=MyAdminHomeView())
 
 
 def create_app(conf):
+    validate_config(conf)
     app = Flask(__name__, static_folder="../../static")
     app.config.from_object(conf)
 

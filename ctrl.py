@@ -17,5 +17,5 @@ if __name__ == "__main__":
     manager.add_command("admin", CmdAdmin())
     manager.run()
 else:
-    # Create app for gunicorn or uwsgi.
-    pass
+    print("Hi gunicorn")
+    app = create_app(confs[os.environ.get('FLASK_CONFIG')])

@@ -48,3 +48,9 @@ confs = {
     "debug": DebugConfig,
     "testing": TestingConfig,
 }
+
+
+def validate_config(config):
+    assert config.X_ADMIN_EMAIL, "Admin email didn't set (ADMIN_EMAIL)"
+    assert config.MAIL_USERNAME, "No mail user (MAIL_USERNAME)"
+    assert config.MAIL_PASSWORD, "No mail password (MAIL_PASSWORD)"
