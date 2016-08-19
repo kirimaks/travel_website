@@ -10,6 +10,7 @@ formatter = logging.Formatter('%(levelname)s:\t %(message)s')
 log_handler.setFormatter(formatter)
 
 BASE_DIR = str.join("/", abspath(__file__).split("/")[:-3])
+IMG_PATH = "images/"    # Directory inside static, need to keep training slash.
 
 
 class Config:
@@ -40,7 +41,7 @@ class DebugConfig(Config):
 
 
 class TestingConfig(DebugConfig):
-    SERVER_NAME = "127.0.0.1:500"
+    SERVER_NAME = "127.0.0.1:5000"
 
 confs = {
     "default": Config,

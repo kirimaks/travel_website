@@ -1,9 +1,12 @@
-import unittest
-from flask_script import Command, Option
-from apps.main import db
-from apps.auth.models import User, UserGroup
-from flask import current_app
 import sys
+import unittest
+from apps.main import db
+from flask import current_app
+from flask_script import Command, Option
+
+from apps.auth.models import User, UserGroup
+from apps.places.models import Place
+from apps.tours.models import Tour
 
 
 class CmdTest(Command):
@@ -49,7 +52,9 @@ def make_shell_context():
         "db": db,
         "User": User,
         "UserGroup": UserGroup,
-        "app": current_app
+        "app": current_app,
+        "Place": Place,
+        "Tour": Tour,
     }
     return context
 

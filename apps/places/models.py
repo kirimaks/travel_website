@@ -28,6 +28,20 @@ class Place(db.Model):
     location = db.Column(db.String(64))
 
     comments = db.relationship(Comment, secondary=comments2places)
+    images = db.relationship("PlaceImage", backref="place")
 
     def __repr__(self):
         return self.title
+
+
+class PlaceImage(db.Model):
+    __tablename__ = "place_images"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    path = db.Column(db.String(256), unique=True)
+
+    place_id = db.Column(db.Integer, db.ForeignKey("places.id"))
+
+    def __repr__(self):
+        return "{} | {}".format(self.name, self.path)
