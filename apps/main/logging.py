@@ -1,8 +1,13 @@
 import os
 from apps.main.config import confs
 import logging
+import sys
 
-conf = confs[os.environ['FLASK_CONFIG']]
+try:
+    conf = confs[os.environ['FLASK_CONFIG']]
+except KeyError:
+    print("( FLASK_CONFIG ) didn't set")
+    sys.exit(0)
 
 log = logging.Logger("auth")
 log.addHandler(conf.X_LOG_HANDLER)

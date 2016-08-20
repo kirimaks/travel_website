@@ -1,16 +1,22 @@
 #!/usr/bin/env python
 
-import os
 from flask_script import Manager, Shell
 
 from apps.main import create_app
 from apps.main.config import confs
 from apps.main.cmd import (CmdTest, make_shell_context,
                            CmdAdmin)
+import os
+import sys
 
 
 if __name__ == "__main__":
-    app = create_app(confs[os.environ.get('FLASK_CONFIG')])
+    try:
+        app = create_app(confs[os.environ.get('FLASK_CONFIG')])
+    except KeyError:
+        print("( FLASK_CONFIG ) didn'set")
+        sys.exit(0)
+
     manager = Manager(app)
     manager.add_command("test", CmdTest())
     manager.add_command("shell", Shell(make_context=make_shell_context))

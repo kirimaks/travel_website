@@ -19,7 +19,8 @@ class Config:
 
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
-    SECRET_KEY = uuid.uuid4().hex
+    # SECRET_KEY = uuid.uuid4().hex
+    SECRET_KEY = "c0db19f0-7083-11e6-95ba-88532eae9b6a"
 
     X_ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
 
@@ -30,6 +31,20 @@ class Config:
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     MAIL_SUBJECT = "[Server notification]"
     MAIL_SENDER = "kirimakz@gmail.com"
+
+    def validate(self):
+        assert self.X_ADMIN_EMAIL, "Admin email didn't set ( ADMIN_EMAIL )"
+        assert self.MAIL_USERNAME, "No mail user ( MAIL_USERNAME )"
+        assert self.MAIL_PASSWORD, "No mail password ( MAIL_PASSWORD )"
+
+
+class ProductionConfig(Config):
+
+    SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
+
+    def validate(self):
+        Config.validate(self)    # Validate basic config.
+        assert self.SQLALCHEMY_DATABASE_URI, "( SQLALCHEMY_DATABASE_URI )"
 
 
 class DebugConfig(Config):
@@ -44,13 +59,7 @@ class TestingConfig(DebugConfig):
     SERVER_NAME = "127.0.0.1:5000"
 
 confs = {
-    "default": Config,
-    "debug": DebugConfig,
-    "testing": TestingConfig,
+    "default": ProductionConfig(),
+    "debug": DebugConfig(),
+    "testing": TestingConfig(),
 }
-
-
-def validate_config(config):
-    assert config.X_ADMIN_EMAIL, "Admin email didn't set (ADMIN_EMAIL)"
-    assert config.MAIL_USERNAME, "No mail user (MAIL_USERNAME)"
-    assert config.MAIL_PASSWORD, "No mail password (MAIL_PASSWORD)"
