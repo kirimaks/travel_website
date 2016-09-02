@@ -2,7 +2,6 @@ import os
 from os.path import abspath
 import logging
 from logging import StreamHandler
-import uuid
 
 
 log_handler = StreamHandler()
@@ -19,18 +18,18 @@ class Config:
 
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
-    # SECRET_KEY = uuid.uuid4().hex
     SECRET_KEY = "c0db19f0-7083-11e6-95ba-88532eae9b6a"
 
     X_ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
 
-    MAIL_SERVER = 'smtp.googlemail.com'
-    MAIL_PORT = 587
-    MAIL_USE_TLS = True
+    MAIL_SERVER = 'smtp.yandex.ru'
+    MAIL_PORT = 465
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     MAIL_SUBJECT = "[Server notification]"
-    MAIL_SENDER = "kirimakz@gmail.com"
+    MAIL_SENDER = "79649436998@yandex.ru"
 
     def validate(self):
         assert self.X_ADMIN_EMAIL, "Admin email didn't set ( ADMIN_EMAIL )"
