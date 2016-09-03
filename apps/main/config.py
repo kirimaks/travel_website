@@ -10,9 +10,12 @@ log_handler.setFormatter(formatter)
 
 BASE_DIR = str.join("/", abspath(__file__).split("/")[:-3])
 IMG_PATH = "images/"    # Directory inside static, need to keep training slash.
+STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 
 class Config:
+    STATIC_DIR = STATIC_DIR
+
     X_LOG_HANDLER = log_handler
     X_LOG_LEVEL = logging.INFO
 
