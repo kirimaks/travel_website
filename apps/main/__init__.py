@@ -21,8 +21,6 @@ admin = Admin(template_mode='bootstrap3', index_view=MyAdminHomeView())
 
 
 def create_app(conf):
-    conf.validate()
-    # app = Flask(__name__, static_folder="../../static")
     app = Flask(__name__, static_folder=conf.STATIC_DIR)
     app.config.from_object(conf)
 

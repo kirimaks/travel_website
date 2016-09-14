@@ -15,45 +15,25 @@ STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 class Config:
     STATIC_DIR = STATIC_DIR
-
     X_LOG_HANDLER = log_handler
     X_LOG_LEVEL = logging.INFO
-
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-
     SECRET_KEY = "c0db19f0-7083-11e6-95ba-88532eae9b6a"
 
-    X_ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
-
-    MAIL_SERVER = 'smtp.yandex.ru'
-    MAIL_PORT = 465
-    MAIL_USE_TLS = False
-    MAIL_USE_SSL = True
-    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
-    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    X_ADMIN_EMAIL = os.environ["ADMIN_EMAIL"]
     MAIL_SUBJECT = "[Server notification]"
-    MAIL_SENDER = "79649436998@yandex.ru"
-
-    def validate(self):
-        assert self.X_ADMIN_EMAIL, "Admin email didn't set ( ADMIN_EMAIL )"
-        assert self.MAIL_USERNAME, "No mail user ( MAIL_USERNAME )"
-        assert self.MAIL_PASSWORD, "No mail password ( MAIL_PASSWORD )"
+    MAIL_SENDER = "kirimakz@gmail.com"
+    MJ_APIKEY_PUBLIC = os.environ['MJ_APIKEY_PUBLIC']
+    MJ_APIKEY_PRIVATE = os.environ['MJ_APIKEY_PRIVATE']
 
 
 class ProductionConfig(Config):
-
-    SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
-
-    def validate(self):
-        Config.validate(self)    # Validate basic config.
-        assert self.SQLALCHEMY_DATABASE_URI, "( SQLALCHEMY_DATABASE_URI )"
+    SQLALCHEMY_DATABASE_URI = os.environ["SQLALCHEMY_DATABASE_URI"]
 
 
 class DebugConfig(Config):
     DEBUG = True
-
     X_LOG_LEVEL = logging.DEBUG
-
     SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/test.db"
 
 
