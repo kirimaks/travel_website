@@ -26,4 +26,4 @@ class FlaskClient(unittest.TestCase):
 
     def test_paces(self):
         response = self.client.get(url_for('places.places_list'))
-        self.assertTrue("Places" in response.get_data(as_text=True))
+        self.assertTrue("Экскурсионные объекты" in response.get_data(as_text=True))

@@ -26,4 +26,4 @@ class FlaskClient(unittest.TestCase):
 
     def test_tours(self):
         response = self.client.get(url_for('tours.tours_list'))
-        self.assertTrue("Tours" in response.get_data(as_text=True))
+        self.assertTrue("Список экскурсий" in response.get_data(as_text=True))

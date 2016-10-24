@@ -1,7 +1,13 @@
-from flask import render_template
+from flask import render_template, request
 from apps.places import places_app
+from apps.places.models import Place
 
 
 @places_app.route("/")
 def places_list():
-    return render_template("places-list.html")
+    page = request.args.get('page', 1, type=int)
+    pagination = Place.query.order_by(Place.title)
+    pagination = pagination.paginate(page, per_page=9, error_out=False)
+    items = enumerate(pagination.items, start=1)
+    return render_template("places-list.html", items=items,
+                           pagination=pagination)

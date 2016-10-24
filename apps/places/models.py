@@ -42,9 +42,9 @@ class Place(db.Model):
         self.slug = slugify_ru(title, to_lower=True)
 
 
-@event.listens_for(Place.title, 'set')
-def create_slug(target, value, oldvalue, initiator):
-    target.generate_slug(value)
+@event.listens_for(Place, 'before_insert')
+def create_slug(mapper, connection, target):
+    target.generate_slug(target.title)
 
 
 class PlaceImage(db.Model):

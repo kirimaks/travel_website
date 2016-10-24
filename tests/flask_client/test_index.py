@@ -26,4 +26,4 @@ class FlaskClient(unittest.TestCase):
 
     def test_index(self):
         response = self.client.get(url_for('index'))
-        self.assertTrue("Index" in response.get_data(as_text=True))
+        self.assertTrue("Экскурсии в Сочи" in response.get_data(as_text=True))
