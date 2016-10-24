@@ -12,7 +12,7 @@ import sys
 
 if __name__ == "__main__":
     try:
-        app = create_app(confs[os.environ.get('FLASK_CONFIG')])
+        app = create_app(confs[os.environ['FLASK_CONFIG']])
     except KeyError:
         print("( FLASK_CONFIG ) didn'set")
         sys.exit(0)
@@ -24,4 +24,4 @@ if __name__ == "__main__":
     manager.run()
 else:
     print("Hi gunicorn")
-    app = create_app(confs[os.environ.get('FLASK_CONFIG')])
+    app = create_app(confs[os.environ['FLASK_CONFIG']])
