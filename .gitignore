@@ -3,3 +3,5 @@ static/images/
 static/admin/
 static/img/
 static/fonts/
+*.min.css
+*.min.js

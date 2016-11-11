@@ -16,7 +16,7 @@ class CreatePlaces(unittest.TestCase):
         for _ in range(places_num):
             place = Place(title=faker.address(),
                           snippet=faker.paragraph(),
-                          description=faker.text(),
+                          description=faker.text(1000),
                           address=faker.street_address())
             db.session.add(place)
 

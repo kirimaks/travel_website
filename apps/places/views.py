@@ -11,3 +11,13 @@ def places_list():
     items = enumerate(pagination.items, start=1)
     return render_template("places-list.html", items=items,
                            pagination=pagination)
+
+
+@places_app.route("/<slug>")
+def show_place(slug):
+    place = Place.query.filter(Place.slug == slug).first()
+
+    if not place:
+        return render_template("errors/404.html"), 404
+
+    return render_template("place.html", place=place)

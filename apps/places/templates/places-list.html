@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% import "custom_macros.html" as macros %}
 
-{% block page_content %}
+{% block place_nav_link %}#page-top{% endblock %}
 
-    <div style="height:200px; background-color:#000">
-    </div>
+{% block styles %}
+    {{ super() }}
+    <!-- main css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block page_content %}
 
     <!-- Page Content -->
     <div class="container">
@@ -27,7 +32,7 @@
                     <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                 </a>
                 <h3>
-                    <a href="#">{{ obj.title }}</a>
+                    <a href="{{ url_for('places.show_place', slug=obj.slug) }}">{{ obj.title }}</a>
                 </h3>
                 <p>{{ obj.snippet }}</p>
             </div>
@@ -56,4 +61,9 @@
 
     <hr>
 
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/places.js') }}" type=""></script>
 {% endblock %}

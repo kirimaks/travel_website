@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 
-{% block page_content %}
+{% block tours_nav_link %}#page-top{% endblock %}
 
-    <div style="height:150px; background-color:#000">
-    </div>
+{% block styles %}
+    {{ super() }}
+    <!-- main css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block page_content %}
 
     <!-- Page Content -->
     <div class="container">

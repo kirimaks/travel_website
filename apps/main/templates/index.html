@@ -2,6 +2,8 @@
 
 {% block title %}Home page{% endblock %}
 
+{% block home_nav_link %}#page-top{% endblock %}
+
 {% block page_content %}
     <!-- Header -->
     <header>
@@ -9,7 +11,7 @@
             <div class="intro-text">
                 <div class="intro-lead-in">Экскурсии в Сочи</div>
                 <div class="intro-heading">Экскурсии в Сочи</div>
-                <a href="#services" class="page-scroll btn btn-xl">Смотреть экскурсии</a>
+                <a href="#portfolio" class="page-scroll btn btn-xl">Смотреть экскурсии</a>
             </div>
         </div>
     </header>
@@ -126,30 +128,6 @@
 
     <!-- Home page JS -->
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            ymaps.ready(init);
-            var myMap, place1;
-
-            function init(){     
-                // Create map.
-                myMap = new ymaps.Map("map", {
-                    center: [43.587272, 39.713958],
-                    zoom: 10
-                });
-                myMap.behaviors.disable('scrollZoom');
-
-                // Create a place.
-                place1 = new ymaps.Placemark([43.684401, 40.231909], 
-                                              { hintContent: 'Красная Поляна', 
-                                                balloonContent: '<a href="#">link</a>' });
-
-                // Add the place.
-                myMap.geoObjects.add(place1);
-            }
-        });
-    </script>
+    <script src="{{ url_for('static', filename='js/index.js') }}" type="text/javascript"> </script>
 
 {% endblock %}

@@ -1,5 +1,7 @@
 {% extends "bootstrap/base.html" %}
 
+{% block html_attribs %} lang="ru"{% endblock %}
+
 {% block metas %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -68,7 +70,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Grand-Sochi.Ru</a>
+                <a class="navbar-brand page-scroll" href="/">Grand-Sochi.Ru</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -78,16 +80,16 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#services">Главная</a>
+                        <a class="page-scroll" href="{% block home_nav_link %}/{% endblock %}">Главная</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#portfolio">Экскурсии</a>
+                        <a class="page-scroll" href="{% block tours_nav_link %}/tours{% endblock %}">Экскурсии</a>
+                    </li>
+                    <li class="active">
+                        <a class="page-scroll" href="{% block place_nav_link %}/places{% endblock %}">Экскурсионные объекты</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#about">Экскурсионные объекты</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#team">Цены</a>
+                        <a class="page-scroll" href="/prices">Цены</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#contact">Контакты</a>
