@@ -15,28 +15,44 @@
                 <h1>{{ place.title }}</h1>
 
                 <!-- Author -->
-                <p class="lead">
+                <!--p class="lead">
                     by <a href="#">Start Bootstrap</a>
-                </p>
+                </p-->
 
                 <hr>
 
                 <!-- Date/Time -->
-                <p><span class="glyphicon glyphicon-time"></span> Posted on August 24, 2013 at 9:00 PM</p>
+                <!--p><span class="glyphicon glyphicon-time"></span> Posted on August 24, 2013 at 9:00 PM</p-->
+                <p><span class="glyphicon glyphicon-time"></span> {{ place.timestamp.strftime("%d %b %Y") }}</p>
 
                 <hr>
 
                 <!-- Preview Image -->
-                <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+                <!--img class="img-responsive" src="http://placehold.it/900x300" alt=""-->
+
+                <div id="links">
+                    <!--a href="images/banana.jpg" title="Banana">
+                        <img src="images/thumbnails/banana.jpg" alt="Banana">
+                    </a>
+                    <a href="images/apple.jpg" title="Apple">
+                        <img src="images/thumbnails/apple.jpg" alt="Apple">
+                    </a>
+                    <a href="images/orange.jpg" title="Orange">
+                        <img src="images/thumbnails/orange.jpg" alt="Orange">
+                    </a-->
+                    {% for img in place.images %}
+                    <a href="{{ url_for('static', filename=img.path) }}" title="{{ img.name }}">
+                        <!--img src="https://placeholdit.imgix.net/~text?txtsize=18&txt=100%C3%97100&w=100&h=100" alt=""-->
+                        <img src="{{ url_for('static', filename=img.thumbnail ) }}" alt="">
+                    </a>
+                    {% endfor %}
+                </div>
 
                 <hr>
 
                 <!-- Post Content -->
-                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
+                <p class="lead">{{ place.snippet }}</p>
+                <p>{{ place.description }}</p>
 
                 <hr>
 
@@ -58,43 +74,18 @@
                 <!-- Posted Comments -->
 
                 <!-- Comment -->
+                {% for comment in place.comments %}
                 <div class="media">
                     <a class="pull-left" href="#">
                         <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
+                        <h4 class="media-heading">{{ comment.author_name }} <small>{{ comment.posted_time }}</small>
                         </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        {{ comment.text }}
                     </div>
                 </div>
-
-                <!-- Comment -->
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
-                        </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                        <!-- Nested Comment -->
-                        <div class="media">
-                            <a class="pull-left" href="#">
-                                <img class="media-object" src="http://placehold.it/64x64" alt="">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading">Nested Start Bootstrap
-                                    <small>August 25, 2014 at 9:30 PM</small>
-                                </h4>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                        </div>
-                        <!-- End Nested Comment -->
-                    </div>
-                </div>
+                {% endfor %}
 
             </div>
 
@@ -166,7 +157,6 @@
 {% block styles %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-        
     <!-- place styles -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.21.3/css/blueimp-gallery.min.css"/>
 {% endblock %}
@@ -188,10 +178,8 @@
 {% block scripts %}
     {{ super() }}
     <!-- place scripts -->
-    <!--script type="text/javascript" src="{{ url_for('static', filename='js/blueimp-gallery.min.js') }}"></script-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.21.3/js/blueimp-gallery.min.js"></script>
-
-    <!--script type="text/javascript" src="{{ url_for('static', filename='js/place.js') }}"></script-->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/place.js') }}"></script>
 {% endblock %}
 
 {% block title %}

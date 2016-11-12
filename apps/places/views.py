@@ -6,7 +6,7 @@ from apps.places.models import Place
 @places_app.route("/")
 def places_list():
     page = request.args.get('page', 1, type=int)
-    pagination = Place.query.order_by(Place.title)
+    pagination = Place.query.order_by(Place.rating)
     pagination = pagination.paginate(page, per_page=9, error_out=False)
     items = enumerate(pagination.items, start=1)
     return render_template("places-list.html", items=items,

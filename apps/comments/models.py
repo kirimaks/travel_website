@@ -13,4 +13,4 @@ class Comment(db.Model):
 
     def __repr__(self):
         return "{} | {} | {}".format(self.author_name, self.author_email,
-                                 self.posted_time)
+                                     self.posted_time)

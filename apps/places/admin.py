@@ -47,7 +47,9 @@ class PlaceView(ProtectedAdminView, ModelView):
     def display_home(self):
         return True
 
-    form_columns = ['title', 'slug', 'snippet', 'description',
+    column_list = ['title', 'timestamp', 'location', 'price', 'rating']
+
+    form_columns = ['title', 'slug', 'timestamp', 'snippet', 'description',
                     'rating', 'price', 'schedule', 'info',
                     'address', 'location', 'comments', 'images']
 
@@ -73,6 +75,9 @@ class PlaceView(ProtectedAdminView, ModelView):
         },
         'description': {
             'rows': 20
+        },
+        'timestamp': {
+            'disabled': True
         }
     }
 
@@ -84,6 +89,11 @@ class ImagesView(PicUploadWithThumbnail, ProtectedAdminView, ModelView):
     def display_home(self):
         return True
 
+    form_widget_args = {
+        'thumbnail': {
+            'disabled': True
+        }
+    }
 
 admin.add_view(PlaceView(Place, db.session))
 admin.add_view(ImagesView(PlaceImage, db.session))

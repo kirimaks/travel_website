@@ -28,7 +28,7 @@
         <div class="row">
         {% for index, obj in items %}
             <div class="col-md-4 portfolio-item">
-                <a href="#">
+                <a href="{{ url_for('places.show_place', slug=obj.slug) }}">
                     <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                 </a>
                 <h3>
